@@ -1,8 +1,11 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from textDecoder import TextDecoder
-
+from PIL import Image
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 
 @app.route('/upload_image', methods=['POST'])
 def upload_image():
@@ -12,8 +15,12 @@ def upload_image():
     decoder.image_to_json()
     decoder.make_request(iam_token)
     text = decoder.get_text('output.json')
-    return text
+
+    response = {
+        'text': text
+    }
+    return jsonify(response)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='192.168.0.106', debug=True, port=7001)

@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Загрузка картинки</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Загрузка картинки</h1>
+        <form id="image-form" method="POST" enctype="multipart/form-data">
+            <label class="input-file">
+                <input type="file" name="file">
+                <span class="input-file-btn">Выберите файл</span>
+                <span class="input-file-text">Максимум 1 мб</span>
+            </label>
+        </form>
+
+        <script>
+            const form = document.querySelector('#image-form');
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                const file = document.querySelector('input[type=file]').files[0];
+                const formData = new FormData();
+                formData.append('image', file);
+                fetch('http://192.168.0.106:7001/upload_image', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const text = data.text;
+                    const results = document.createElement('p');
+                    results.innerHTML = `Текст: ${text}`;
+                    document.body.appendChild(results);
+                });
+            });
+        </script>
+    </body>
+</html>

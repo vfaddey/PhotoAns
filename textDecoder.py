@@ -43,7 +43,7 @@ class TextDecoder:
 
     @staticmethod
     def make_request(iam_token):
-        os.system(f"export IAM_TOKEN={iam_token}")
+        os.system(f"set IAM_TOKEN={iam_token}")
         os.system(f'curl -X POST \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer {iam_token}" \
@@ -58,8 +58,8 @@ class TextDecoder:
         for i, block in enumerate(nested_lookup('blocks', content)):
             ans.append([])
             for j, line in enumerate(nested_lookup('lines', block)):
-                ans[i].append(' '.join(nested_lookup('text', line)) + '\n')
-            ans[i] = ' '.join(ans[i]) + '\n\n'
+                ans[i].append(' '.join(nested_lookup('text', line)) + '<br>')
+            ans[i] = ' '.join(ans[i]) + '<br><br>'
         text = ''.join(ans)
         return text
 
