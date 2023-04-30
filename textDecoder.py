@@ -11,7 +11,8 @@ class TextDecoder:
         self.oauth_token = oauth_token
         self.folder_id = folder_id
 
-    def encode_file(self, file):
+    @staticmethod
+    def encode_file(file):
         file_content = file.read()
         return base64.b64encode(file_content).decode('utf-8')
 
