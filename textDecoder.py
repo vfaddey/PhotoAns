@@ -13,10 +13,21 @@ class TextDecoder:
 
     @staticmethod
     def encode_file(file):
+        """
+        Encodes file for json request
+
+        :param file: file from user
+        :return: encoded file to base64
+        """
         file_content = file.read()
         return base64.b64encode(file_content).decode('utf-8')
 
     def get_iam_token(self):
+        """
+        Gets Yandex iam-token, using folder-id, oauthtoken
+        :return: iam-token
+        """
+
         iam_url = 'https://iam.api.cloud.yandex.net/iam/v1/tokens'
 
         response = post(iam_url, json={"yandexPassportOauthToken": self.oauth_token})
@@ -26,6 +37,10 @@ class TextDecoder:
         return None
 
     def image_to_json(self):
+        """
+        Makes json file for request
+        :return: None
+        """
         outfile = self.encode_file(self.file)
         out = {
             "folderId": "b1gq9lq6ihi5068iq6bs",
@@ -53,6 +68,11 @@ class TextDecoder:
 
     @staticmethod
     def get_text(path):
+        """
+        Finds text in json file and structures it
+        :param path: path of json file
+        :return: text from image
+        """
         with open(path, 'r', encoding='utf-8') as f:
             content = json.load(f)
         ans = []

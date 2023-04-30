@@ -1,5 +1,6 @@
 import openai
-openai.api_key = "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"
+import config
+openai.api_key = config.api_key
 
 
 def ask_gpt(question):
@@ -14,4 +15,3 @@ def ask_gpt(question):
     )
     answer = response.choices[0].message.content.replace('\n', '<br>')
     return answer
-
