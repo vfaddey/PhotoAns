@@ -59,8 +59,10 @@ class TextDecoder:
             ans.append([])
             for j, line in enumerate(nested_lookup('lines', block)):
                 ans[i].append(' '.join(nested_lookup('text', line)) + '<br>')
-            ans[i] = ' '.join(ans[i]) + '<br><br>'
+            ans[i] = ' '.join(ans[i]) + '<br>'
         text = ''.join(ans)
+        while text[-4:] == '<br>':
+            text = text[:-4]
         return text
 
 

@@ -4,14 +4,17 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="style.css">
     </head>
-    <body>
-        <h1>Загрузка картинки</h1>
+    <body style="background-color: #161617; color: #fff; margin:0 25% 0 25%; width:50%;">
+    <div class="image-to-text">
+        <h1>Решение теста</h1>
+        <p>Загрузите фотографию проверочной работы, подождите несколько минут и получите ответы на все вопросы!</p>
         <form id="image-form" method="POST" enctype="multipart/form-data">
             <label class="input-file">
+                <span class="input-file-text" type="text"></span>
                 <input type="file" name="file">
                 <span class="input-file-btn">Выберите файл</span>
-                <span class="input-file-text">Максимум 1 мб</span>
             </label>
+            <button class="submit" type="submit">Отправить</button>
         </form>
 
         <script>
@@ -29,10 +32,60 @@
                 .then(data => {
                     const text = data.text;
                     const results = document.createElement('p');
-                    results.innerHTML = `Текст: ${text}`;
-                    document.body.appendChild(results);
+                        results.style = `
+                        border: 0px;
+                        padding: 1px 20px 20px 20px;
+                        border-radius: 20px;
+                        font-size: 16px;
+                        text-align: justify;
+                        background-color: rgb(42, 42, 44);`;
+                results.innerHTML = `${text}`;
+                document.querySelector('div.image-to-text').appendChild(results);
                 });
             });
         </script>
+        <script>
+            $('.input-file input[type=file]').on('change', function(){
+            let file = this.files[0];
+            $(this).closest('.input-file').find('.input-file-text').html(file.name);
+            });
+        </script>
+    </div>
+    <h1>Или</h1>
+    <div class="text-to-answer">
+        <h3>Напиши свой вопрос здесь!</h3>
+        <form action="/process_text" method="POST">
+            <textarea class="text-input" id="text_input" name="text_input" cols="100" rows="5" placeholder="Введите текст (до 200 символов)" style="background-color: rgb(42, 42, 44); color: #fff; padding: 20px; resize: none; border-radius: 20px; font-size: 16px;"></textarea>
+        </form>
+        <button class="submit" type="submit" onclick="sendText()">Узнать ответ</button>
+
+        <script>
+        function sendText() {
+            const textInput = document.getElementById('text_input').value
+            fetch('http://192.168.0.106:7001/process_text', {
+              method: 'POST',
+              body: JSON.stringify({text_input: textInput}),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const text = data.text;
+                const results = document.createElement('p');
+                results.style = `
+                    border: 0px;
+                    padding: 1px 20px 20px 20px;
+                    border-radius: 20px;
+                    font-size: 16px;
+                    text-align: justify;
+                    background-color: rgb(42, 42, 44);`;
+                results.innerHTML = `${text}`;
+                document.body.appendChild(results);
+            })
+          }
+    </script>
+    </div>
+
     </body>
 </html>

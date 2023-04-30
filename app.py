@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from textDecoder import TextDecoder
-from PIL import Image
 from flask_cors import CORS
+from solution import ask_gpt
 
 app = Flask(__name__)
 CORS(app)
@@ -15,11 +15,31 @@ def upload_image():
     decoder.image_to_json()
     decoder.make_request(iam_token)
     text = decoder.get_text('output.json')
-
+    answer = ask_gpt(text)
     response = {
-        'text': text
+        'text': format_response(text, answer),
     }
     return jsonify(response)
+
+
+@app.route('/process_text', methods=['POST'])
+def process_text():
+    text_input = request.json['text_input']
+    if len(text_input) > 200:
+        response = {
+            'text': 'Запрос превысил лимит символов'
+        }
+        return jsonify(response)
+    answer = ask_gpt(text_input)
+    response = {
+        'text': format_response(text_input, answer)
+    }
+    return jsonify(response)
+
+
+def format_response(text, answer):
+    full_answer = '<h4>Вопрос</h4>' + text + '<br>' + '<h4>Ответ</h4>' + answer
+    return full_answer
 
 
 if __name__ == '__main__':
