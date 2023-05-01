@@ -24,7 +24,7 @@
                 const file = document.querySelector('input[type=file]').files[0];
                 const formData = new FormData();
                 formData.append('image', file);
-                fetch('http://192.168.0.106:7000/upload_image', {
+                fetch('/upload_image', {
                     method: 'POST',
                     body: formData
                 })
@@ -62,7 +62,7 @@
         <script>
         function sendText() {
             const textInput = document.getElementById('text_input').value
-            fetch('http://192.168.0.106:7000/process_text', {
+            fetch('/process_text', {
               method: 'POST',
               body: JSON.stringify({text_input: textInput}),
               headers: {
