@@ -77,4 +77,4 @@ def format_response(text, answer):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.106', debug=True, port=7000)
+    app.run(host='0.0.0.0', debug=True, port=7000)
