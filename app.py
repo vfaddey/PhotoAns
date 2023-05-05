@@ -22,7 +22,7 @@ def upload_image():
     """
     # Получаем картинку и читаем текст на ней с помощью Yandex.vision
     file = request.files['image']
-    decoder = TextDecoder(file, oauth_token='y0_AgAAAAAw3mtVAATuwQAAAADh_eq_P0vo8E87R_q8ZbjPSR5UQJsxqr0', folder_id='ajef1hm4nhnc2v60u2vc')
+    decoder = TextDecoder(file, oauth_token='YOUR OAuth-token Yandex', folder_id='YOUR YANDEX-FOLDER-ID')
     iam_token = decoder.get_iam_token()
     decoder.image_to_json()
     decoder.make_request(iam_token)
@@ -78,4 +78,4 @@ def format_response(text, answer):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.106', debug=True, port=7000)
+    app.run(host='0.0.0.0', debug=True, port=7000)
