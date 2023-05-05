@@ -7,6 +7,11 @@ import os
 
 class TextDecoder:
     def __init__(self, file, oauth_token=None, folder_id=None):
+        """
+        :param file: picture with text to read
+        :param oauth_token: your Yandex.cloud oauth-token
+        :param folder_id: your Yandex.cloud folder-id
+        """
         self.file = file
         self.oauth_token = oauth_token
         self.folder_id = folder_id

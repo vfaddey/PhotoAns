@@ -9,7 +9,7 @@ def ask_gpt(question):
         messages=[
             {
                 'role': 'user',
-                'content': f'{question}'
+                'content': f'Представь, что ты сдаешь экзамен и тебе нужно решить этот тест: \n {question}'
             }
         ],
     )

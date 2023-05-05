@@ -49,11 +49,12 @@ def process_text():
 
     # Читаем текст и проверяем на длину
     text_input = request.json['text_input']
-    if len(text_input) > 200:
-        response = {
-            'text': 'Запрос превысил лимит символов'
-        }
+    if len(text_input) > 300:
+        response = {'text': 'Запрос превысил лимит символов'}
         return jsonify(response)
+    elif len(text_input) < 10:
+        response = {'text': 'Запрос слишком короткий'}
+        return response
 
     # Получаем ответ от GPT
     try:
